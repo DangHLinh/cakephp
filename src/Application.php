@@ -27,7 +27,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-
+use Cake\Http\Middleware\SessionCsrfProtectionMiddleware;
 /**
  * Application setup class.
  *
@@ -41,6 +41,7 @@ class Application extends BaseApplication
      *
      * @return void
      */
+    
     public function bootstrap(): void
     {
         // Call parent to load bootstrap from files.

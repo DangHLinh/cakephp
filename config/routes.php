@@ -12,7 +12,7 @@ use Cake\Routing\RouteBuilder;
 return static function (RouteBuilder $routes) {
     $routes->setRouteClass(DashedRoute::class);
     /** @var \Cake\Routing\RouteBuilder $routes */
-    $routes->connect('/', ['controller' => 'Articles', 'action' => 'index']);
+    $routes->connect('/', ['controller' => 'Dashboards', 'action' => 'index']);
 
     $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
