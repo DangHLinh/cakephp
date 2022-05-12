@@ -12,7 +12,15 @@ use Cake\Routing\RouteBuilder;
 return static function (RouteBuilder $routes) {
     $routes->setRouteClass(DashedRoute::class);
     /** @var \Cake\Routing\RouteBuilder $routes */
-    $routes->connect('/', ['controller' => 'Dashboards', 'action' => 'index']);
+    $routes->connect('/', ['controller' => 'Products', 'action' => 'testQuery']);
+
+    // $routes->connect('/', ['controller' => 'Groups', 'action' => 'index']);
+    $routes->connect('/groups/add', ['controller' => 'Groups', 'action' => 'add']);
+    $routes->connect('/view/*', ['controller' => 'Contents', 'action' => 'view']);
+    $routes->connect('/groups/delete', ['controller' => 'Groups', 'action' => 'delete']);
+    $routes->connect('/groups/edit', ['controller' => 'Groups', 'action' => 'edit']);
+    $routes->connect('/contents/add', ['controller' => 'Contents', 'action' => 'add']);
+    $routes->connect('/contents/delete', ['controller' => 'Contents', 'action' => 'delete']);
 
     $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);

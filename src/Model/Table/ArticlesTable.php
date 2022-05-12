@@ -16,6 +16,7 @@ class ArticlesTable extends Table
         $this->addBehavior('Timestamp');
     }
 
+
     // Add the following method.
     public function beforeSave(EventInterface $event, $entity, $options)
     {

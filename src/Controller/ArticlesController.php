@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Cake\Datasource\ConnectionManager;
+
 class ArticlesController extends AppController
 {
     public function initialize(): void
@@ -49,7 +51,7 @@ class ArticlesController extends AppController
         }
         $this->set('article', $article);
     }
-    
+
     public function edit($slug)
     {
         $article = $this->Articles
@@ -78,6 +80,11 @@ class ArticlesController extends AppController
             return $this->redirect(['action' => 'show']);
         }
     }
-    
+
+    public function someMethod()
+    {
+        $articles = $this->getTableLocator()->get('Articles');
+        // more code.
+    }
 
 }
