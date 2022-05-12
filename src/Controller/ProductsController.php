@@ -4,20 +4,24 @@ namespace App\Controller;
 
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
+
 class ProductsController extends AppController
 {
+    private $Contents;
     public function initialize(): void
     {
         parent::initialize();
 
         $this->loadComponent('Paginator');
         $this->loadComponent('Flash'); // Include the FlashComponent
+        $this->Contents = $this->getTableLocator()->get("Contents");
     }
 
     public function testQuery()
     {
         $products = $this->getTableLocator()->get('Products');
-
+        $groups = $this->getTableLocator()->get('Groups');
+        $contents = $this->getTableLocator()->get('Contents');
         // // lấy all data trong bảng
         // $products = $this->getTableLocator()->get('Products')->find();
 
@@ -70,6 +74,34 @@ class ProductsController extends AppController
         //     ->where(function (QueryExpression $exp, Query $q) {
         //         return $exp->like('name', '%ame%');
         //     });
+
+        //
+        // $products = $groups->find()
+        //     ->join([
+        //         'table' => 'contents',
+        //         'alias' => 'ct',
+        //         'type' => 'INNER',
+        //         'conditions' => 'ct.content_group = group_id',
+        //     ])->where(['group_id' => 81]);
+
+        
+        $query = $this->Contents->find();
+        $products = $query->select([
+            "Contents.content_id",
+            "Contents.content_body",
+            "g.group_id",
+            "g.group_name"
+        ])->join([
+            "table" => "groups",
+            "alias" => "g",
+            "type" => "INNER",
+            "conditions" => "Contents.content_group = g.group_id"
+        ])->where(['group_id' => 81])->toList();
+
+
+
+        // debug($products);
+        // die;
 
         $this->viewBuilder()->setLayout('a');
         $this->set(compact('products'));

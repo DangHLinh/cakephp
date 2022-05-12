@@ -1,8 +1,5 @@
 <?php foreach ($products as $pro) : ?>
-    <?= $pro->name ?>
-    <br>
-    <?= $pro->description ?>
-    <br>
-    <?= $pro->created ?>
-    <br><br>
+    <?= $pro->g['group_name'] ?><br>
+    <?= $pro->content_body ?><br>
+    
 <?php endforeach; ?>

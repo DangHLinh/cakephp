@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -9,6 +10,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Exception;
 use Cake\Log\Log;
+
 /**
  * Contents Model
  *
@@ -41,8 +43,11 @@ class ContentsTable extends Table
         $this->setTable('contents');
         $this->setDisplayField('content_id');
         $this->setPrimaryKey('content_id');
+        
+        // $this->belongsTo('Groups')
+        //     ->setForeignKey('content_group')
+        //     ->setJoinType('INNER');
     }
-
     /**
      * Default validation rules.
      *
@@ -75,20 +80,20 @@ class ContentsTable extends Table
         return $validator;
     }
 
-    public function view($group_id){
-        try{
+    public function view($group_id)
+    {
+        try {
             $contents = $this->find()
-            ->where(['content_group' => $group_id]);
+                ->where(['content_group' => $group_id]);
             return $contents;
-        }
-
-        catch(exception $e){
-            Log::error("Exception occured\n". $e);
+        } catch (exception $e) {
+            Log::error("Exception occured\n" . $e);
         }
     }
 
-    public function add($content_body, $group_id){
-        try{
+    public function add($content_body, $group_id)
+    {
+        try {
             $contents = $this->newEmptyEntity();
             $contents->content_body = $content_body;
             $contents->content_date = date("Y/m/d");
@@ -96,9 +101,8 @@ class ContentsTable extends Table
             $contents->content_status = 1;
 
             return ($this->save($contents));
-        }
-        catch(exception $e){
-            Log::error("Exception occured\n". $e);
+        } catch (exception $e) {
+            Log::error("Exception occured\n" . $e);
         }
     }
 }

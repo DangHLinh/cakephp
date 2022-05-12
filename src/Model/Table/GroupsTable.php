@@ -41,6 +41,8 @@ class GroupsTable extends Table
         $this->setTable('groups');
         $this->setDisplayField('group_id');
         $this->setPrimaryKey('group_id');
+        // $this->hasMany('Contents');
+        
     }
 
     /**
