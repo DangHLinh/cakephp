@@ -37,5 +37,9 @@ class AppView extends View
      */
     public function initialize(): void
     {
+        // load cái phân trang
+    
+        $this->loadHelper('Paginator', ['templates' => 'paginator-templates']);
+        $this->loadHelper('Breadcrumbs');
     }
 }

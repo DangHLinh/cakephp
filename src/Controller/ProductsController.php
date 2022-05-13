@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
+use Cake\Validation\Validator;
 
 class ProductsController extends AppController
 {
@@ -14,7 +15,6 @@ class ProductsController extends AppController
 
         $this->loadComponent('Paginator');
         $this->loadComponent('Flash'); // Include the FlashComponent
-        $this->Contents = $this->getTableLocator()->get("Contents");
     }
 
     public function testQuery()
@@ -84,27 +84,59 @@ class ProductsController extends AppController
         //         'conditions' => 'ct.content_group = group_id',
         //     ])->where(['group_id' => 81]);
 
-        
-        $query = $this->Contents->find();
-        $products = $query->select([
-            "Contents.content_id",
-            "Contents.content_body",
-            "g.group_id",
-            "g.group_name"
-        ])->join([
-            "table" => "groups",
-            "alias" => "g",
-            "type" => "INNER",
-            "conditions" => "Contents.content_group = g.group_id"
-        ])->where(['group_id' => 81])->toList();
+        // // inner join lấy 2 cột của 2 bảng luôn
+        // // cú pháp lấy cột của bảng phụ 
+        // // $pro->g['group_name']
+        // $products = $contents->find()->select([
+        //     "Contents.content_id",
+        //     "Contents.content_body",
+        //     "g.group_id",
+        //     "g.group_name"
+        // ])->join([
+        //     "table" => "groups",
+        //     "alias" => "g",
+        //     "type" => "INNER",
+        //     "conditions" => "Contents.content_group = g.group_id"
+        // ])->where(['group_id' => 81])->toList();
 
-
-
+        // // phân trang cơ bản
+        // $products = $this->paginate($this->getTableLocator()->get('Products')->find());
+        // // này là của trang view
+        // <nav aria-label="Page navigation example" class="text-center">
+        //     <ul class="pagination">
+        //         <li class="page-item"><?= $this->Paginator->first("<<") ?</li>
+        //         <li class="page-item"><?= $this->Paginator->numbers() ?</li>
+        //         <li class="page-item"><?= $this->Paginator->last(">>") ?</li>
+        //     </ul>
+        // </nav>
         // debug($products);
         // die;
 
         $this->viewBuilder()->setLayout('a');
         $this->set(compact('products'));
+        return $this->render('/Products/view');
+    }
+
+    // // phân trang
+    // public $paginate = [
+    //     'limit' => 25,
+    //     'order' => [
+    //         'Products.id' => 'asc'
+    //     ]
+    // ];
+
+    public function add()
+    {
+        $products = $this->Products->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $products = $this->Products->patchEntity($products, $this->request->getData());
+            $name = $this->request->getData('name');
+            $products->name = $name;
+            $products->description = 'description';
+            if ($this->Products->save($products)) {
+                return $this->render('/Products/view');
+            }
+        }
         return $this->render('/Products/view');
     }
 }

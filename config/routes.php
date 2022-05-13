@@ -22,6 +22,8 @@ return static function (RouteBuilder $routes) {
     $routes->connect('/contents/add', ['controller' => 'Contents', 'action' => 'add']);
     $routes->connect('/contents/delete', ['controller' => 'Contents', 'action' => 'delete']);
 
+    $routes->connect('/products/add', ['controller' => 'Products', 'action' => 'add']);
+
     $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
         $builder->connect('/pages/*', 'Pages::display');

@@ -21,7 +21,7 @@ return
         'development' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
-            'name' => 'development_db',
+            'name' => 'cakephp',
             'user' => 'root',
             'pass' => '',
             'port' => '3306',
